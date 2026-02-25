@@ -7,7 +7,7 @@ class ComexDAO:
     @staticmethod
     def get_valor_por_mes(ano:int):
         """Consulta:Valor total por mês em um ano específico"""
-        engine = create_engine(Connection().comex)
+        engine = create_engine(Connection().dados)
         query = text("""
             SELECT Ano, Mes, SUM([Valor US$ FOB]) as Total_Fob FROM dados WHERE Ano = :ano
             GROUP BY Ano, Mes
@@ -22,7 +22,7 @@ class ComexDAO:
     @staticmethod
     def  get_valor_por_ano():
         """Consulta: Valor total anual"""
-        engine = create_engine(Connection().comex)
+        engine = create_engine(Connection().dados)
         query = text("""
             Select Ano, SUM([Valor US$ FOB]) as Total_Fob FROM dados GROUP BY Ano ORDER BY Ano DESC
         """)
@@ -34,7 +34,7 @@ class ComexDAO:
     @staticmethod
     def get_produto(cod_sh6: int):
         """Consulta: Detalhamento do produto SH6"""
-        engine = create_engine(Connection().comex)
+        engine = create_engine(Connection().dados)
         query = text("""
             SELECT d.Ano,d.Fluxo,
                 p.cod_sh2, p.descricao_sh2,
