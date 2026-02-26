@@ -1,18 +1,35 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, HTTPException
 from app.dao.tse_dao import EleitoresDAO
-from app.schemas.eleitores_schema import EleitoresSchema
-from typing import List
+from app.schemas.eleitores_schema import EleitoresGenero, EleitoresGrau, TseConsolidadoAno, TseConsolidadoMes
+from typing import List, Union
 from limiter_config import limiter
 router = APIRouter(prefix="/v1/eleitores", tags=["Eleitores"])
 
 
-@router.get("/eleitores", response_model=List[EleitoresSchema],
+@router.get("/eleitores", response_model=Union[List[EleitoresGenero], List[EleitoresGrau]],
             summary="Consulta dados referente aos eleitores ativos no município.",
-            description="""""")
+            description="""Para realizar a consulta, escolha o ano que deseja e
+             no campo perfil escolha entre: 'genero' ou 'grau'.""")
 @limiter.limit("5/minute")
 async def consulta_eleitores(request: Request, ano: int, perfil: str = "genero"):
-    if perfil == "genero":
+    if perfil.lower() == "genero":
         return EleitoresDAO.get_por_genero(ano)
-    elif perfil == "instrucao":
+    elif perfil.lower() == "grau":
         return EleitoresDAO.get_por_grau(ano)
-    return {"error":"Perfil não encontrado. Use 'gênero' ou 'instrução'."}
+    return HTTPException(status_code=400, detail="Perfil não encontrado. Use Genero ou instrucao")
+
+
+@router.get("/eleitores_ano", response_model=List[TseConsolidadoAno],
+            summary="Consulta dados referente aos eleitores ativos no município por ano.",
+            description="""Para realizar a consulta, escolha o ano de referência.""")
+@limiter.limit("5/minute")
+async def consulta_eleitores_ano(request: Request):
+    return EleitoresDAO.get_eleitores_ano()
+
+
+@router.get("/eleitores_mes_ano", response_model=List[TseConsolidadoMes],
+            summary="Consulta dados referente aos eleitores ativos no município por mês/ano.",
+            description="""Para realizar a consulta, escolha o ano e mês de referência.""")
+@limiter.limit("5/minute")
+async def consulta_eleitores_mes(request: Request, mes: int, ano: int):
+    return EleitoresDAO.get_eleitores_mes(mes, ano)

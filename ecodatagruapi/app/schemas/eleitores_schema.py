@@ -2,27 +2,39 @@ from pydantic import BaseModel
 from typing import Optional
 
 
-class EleitoresSchema(BaseModel):
-    sg_uf: str
-    cod_municipio: int
-    nm_municipio: str
-    nr_ano: int
-    nr_mes: int
-    qt_eleitores: int
-    dt_carga: str
+class EleitoresGenero(BaseModel):
+    Cod_municipio: int
+    Municipio: str
+    Ano: int
+    Genero: str
+    Total_aptos: int
+    Total_comparecimento: int
+    Total_abstencao: int
     fonte: Optional[str] = "TSE"  # valor padrão
 
 
-class TseConsolidado(BaseModel):
-    Cd_municipio: int
-    Ano: int
-    Estado_civil: str
-    Genero: str
+class EleitoresGrau(BaseModel):
+    Cod_municipio: int
     Municipio: str
-    UF: str
+    Ano: int
     Grau_de_instrucao: str
-    Qtd_comparecimento: int
-    Qtd_abstencao: int
-    Qtd_aptos: int
-    Data_de_carga: str
+    Total_aptos: int
+    Total_comparecimento: int
+    Total_abstencao: int
+    fonte: Optional[str] = "TSE"  # valor padrão
+
+
+class TseConsolidadoAno(BaseModel):
+    Cod_municipio: int
+    Nm_municipio: str
+    Nr_ano: int
+    Qtd_eleitores: int
+    font: Optional[str] = "TSE"
+
+
+class TseConsolidadoMes(BaseModel):
+    Cod_municipio: int
+    Nm_municipio: str
+    Nr_mes: int
+    Qtd_eleitores: int
     font: Optional[str] = "TSE"
