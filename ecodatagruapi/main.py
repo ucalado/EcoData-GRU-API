@@ -8,11 +8,20 @@ from limiter_config import limiter
 from rotas import ibge, eleitores, comex, cnes
 
 app = FastAPI(title="EcoData-GRU API",
-              description="""API para disponibilização de dados econômicos de Guarulhos, para suporte a tomada de decisão.
-                            \n\n\nAlterar visualização:
-                            - [Página de testes (Swagger UI)](/docs)
-                            - [Página de leitura (ReDoc)](/redoc)
-                          """,
+              description="""
+API para disponibilização de dados econômicos de Guarulhos, para suporte a tomada de decisão.
+            
+### Objetivo
+Consolidar informações diversas, de várias áreas, secretarias, departamentos e orgãos municipais,
+em um repositório único. Esse ecossistema permite:
+* **Tratamento e análise:** Padronização de dados brutos de fontes distintas.
+* **Agilidade:**Otimização do processo de produção de relatórios para gestão pública.
+* **Transparência:** Facilitação do acesso a indicadores chave (KPIs) da cidade.
+
+### Documentação alternativa
+* [Página de testes (Swagger UI)](/docs)
+* [Página de leitura (ReDoc)](/redoc)
+""",
               version="1.0.0",
               contact={"name": "Ulisses Calado",
                        "url": "https://github.com/ucalado/",

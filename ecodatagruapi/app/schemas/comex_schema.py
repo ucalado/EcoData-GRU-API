@@ -5,6 +5,7 @@ from typing import Optional
 class ComexMensal(BaseModel):
     Ano: int
     Mes: str
+    Fluxo: str
     Total_Fob: int
 
     fonte: Optional[str] = "COMEXSTAT" # valor padrão
@@ -12,6 +13,7 @@ class ComexMensal(BaseModel):
 
 class ComexAnual(BaseModel):
     Ano: int
+    Fluxo: str
     Total_Fob: int
 
     fonte: Optional[str] = "COMEXSTAT" # valor padrão

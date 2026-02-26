@@ -9,7 +9,7 @@ class ComexDAO:
         """Consulta:Valor total por mês em um ano específico"""
         engine = create_engine(Connection().dados)
         query = text("""
-            SELECT Ano, Mes, SUM([Valor US$ FOB]) as Total_Fob FROM dados WHERE Ano = :ano
+            SELECT Ano, Mes,Fluxo, SUM([Valor US$ FOB]) as Total_Fob FROM dados WHERE Ano = :ano
             GROUP BY Ano, Mes
             ORDER BY Mes ASC
            """)
@@ -24,7 +24,7 @@ class ComexDAO:
         """Consulta: Valor total anual"""
         engine = create_engine(Connection().dados)
         query = text("""
-            Select Ano, SUM([Valor US$ FOB]) as Total_Fob FROM dados GROUP BY Ano ORDER BY Ano DESC
+            Select Ano,Fluxo, SUM([Valor US$ FOB]) as Total_Fob FROM dados GROUP BY Ano ORDER BY Ano DESC
         """)
         with engine.connect() as conn:
             resultado = conn.execute(query)
@@ -32,7 +32,7 @@ class ComexDAO:
 
 
     @staticmethod
-    def get_produto(cod_sh6: int):
+    def get_produto():
         """Consulta: Detalhamento do produto SH6"""
         engine = create_engine(Connection().dados)
         query = text("""
@@ -42,11 +42,8 @@ class ComexDAO:
                 p.cod_sh6, p.descricao_sh6,
                 SUM(d.[Valor US$ FOB]) as Total_Fob
             FROM dados d
-            INNER JOIN produtos p ON (d.Cod_SH2 = p.cod_sh2 and d.Cod_SH4 = p.cod_sh4)
-            WHERE p.cod_sh6 = :cod_sh6
-            GROUP BY d.Ano, d.Fluxo, p.cod_sh6
-            ORDER BY d.Ano DESC            
+            INNER JOIN produtos p ON (d.Cod_SH2 = p.cod_sh2 and d.Cod_SH4 = p.cod_sh4)             
             """)
         with engine.connect() as conn:
-            resultado = conn.execute(query,{"cod_sh6": cod_sh6})
+            resultado = conn.execute(query)
             return [dict(row._mapping) for row in resultado]

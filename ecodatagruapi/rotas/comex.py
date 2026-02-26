@@ -22,9 +22,9 @@ async def consulta_anual(request: Request):
     return ComexDAO.get_valor_por_ano()
 
 
-@router.get("/produtos/{cod_sh6}", response_model=List[ComexProduto],summary="Consulta classificação de produtos.",
+@router.get("/produtos/", response_model=List[ComexProduto],summary="Consulta classificação de produtos.",
             description=""" 
             """)
 @limiter.limit("5/minute")
-async def consulta_produtos(request: Request, cod_sh6: int):
-    return ComexDAO.get_produto(cod_sh6)
+async def consulta_produtos(request: Request):
+    return ComexDAO.get_produto()
