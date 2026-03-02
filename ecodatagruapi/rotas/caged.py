@@ -9,7 +9,7 @@ router = APIRouter(prefix="/v1/caged", tags=["Caged"])
 @router.get("/caged_setor", response_model=List[CagedSchema],
             summary="Consulta dados referentes ao município.",
             description="""
-            
+            Para realizar a consulta, escolhar um setor entre: industria, comercio, servico, agricultura.
             """)
 @limiter.limit("5/minute")
 def get_caged_setor(request: Request, setor: str):

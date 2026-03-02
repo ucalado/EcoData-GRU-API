@@ -5,7 +5,7 @@ from slowapi.middleware import SlowAPIMiddleware
 from slowapi.errors import RateLimitExceeded
 
 from limiter_config import limiter
-from rotas import ibge, eleitores, comex, cnes
+from rotas import caged, eleitores, comex, cnes
 
 app = FastAPI(title="EcoData-GRU API",
               description="""
