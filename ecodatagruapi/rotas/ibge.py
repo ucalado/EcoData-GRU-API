@@ -1,15 +1,27 @@
-from fastapi import APIRouter
-from app.schemas.ibge_schema import IbgeSchema
-from app.dao.ibge_dao import IbgeDAO
+from fastapi import APIRouter, Request, Query
+from app.schemas.caged_schema import CagedSchema
+from app.dao.caged_dao import CagedDAO
 from typing import List
-router = APIRouter(prefix="/v1/ibge", tags=["Ibge"])
+from limiter_config import limiter
+router = APIRouter(prefix="/v1/caged", tags=["Caged"])
 
 
-@router.get("/ibge", response_model=List[IbgeSchema],
+@router.get("/caged_setor", response_model=List[CagedSchema],
             summary="Consulta dados referentes ao município.",
             description="""
             
             """)
-def get_ibge():
-    dados = IbgeDAO.get_municipio()
-    return dados
+@limiter.limit("5/minute")
+def get_caged_setor(request: Request, setor: str):
+    return CagedDAO.get_por_setor(setor)
+
+
+@router.get("/caged_ano", response_model=List[CagedSchema],
+            summary="Consulta dados referentes ao município.",
+            description="""
+            
+            """)
+@limiter.limit("5/minute")
+def get_caged_ano(request: Request, ano: int = Query(2024, description="Ano de consulta")):
+    return CagedDAO.get_por_ano(ano)
+
