@@ -31,7 +31,7 @@ setattr(app.state, "limiter", limiter)
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(SlowAPIMiddleware)
 
-app.include_router(ibge.router)
+app.include_router(caged.router)
 app.include_router(eleitores.router)
 app.include_router(comex.router)
 app.include_router(cnes.router)
