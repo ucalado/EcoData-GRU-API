@@ -24,9 +24,8 @@ A aplicação foi estruturada seguindo as melhores práticas de desenvolvimento 
 ## Endpoints Principais:
 | Método | Endpoint | Descrição |
 | :--- | :--- | :--- |
-| `GET` | `/api/v1/pib` | Retorna série histórica do PIB municipal. |
-| `GET` | `/v1/emprego` | Dados de saldo de empregos (Caged). |
-| `GET` | `/v1/arrecadacao` | Evolução de receitas tributárias. |
+| `GET` | `/v1/caged/caged_setor` | Dados de saldo de empregos por setor(Caged). |
+| `GET` | `/v1/caged/caged_ano` | Dados de saldo de empregos por ano(Caged). |
 | `GET` | `/v1/eleitores/eleitores` | Consulta quantidade de eleitores por gênero e ano. |
 | `GET` | `/v1/eleitores/eleitores_ano` | Consulta quantidade de eleitores por ano. |
 | `GET` | `/v1/eleitores/eleitores_mes_ano` | Consulta quantidade de eleitores por mês e ano.  |
