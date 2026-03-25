@@ -19,6 +19,7 @@ transformando dados estruturados em bancos SQL em formatos de intercâmbio JSON,
 A aplicação foi estruturada seguindo as melhores práticas de desenvolvimento web e arquitetura de software:
 - **Linguagem:** Python
 - **Framework:** FastAPI, SQLAlchemy
+- **Biblioteca:** Pydantic
 - **Banco de Dados:** SQLite
 
 ## Endpoints Principais:
